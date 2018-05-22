@@ -12,6 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import net.njfc.respawnredux.client.layers.MenuLayer;
 import net.njfc.respawnredux.client.util.Loader;
 
 /**
@@ -73,6 +74,6 @@ public class RRClient extends Application {
         runtime.start();
 
         // Add essential layers to the stack
-          // runtime.getLayers().push(new somethingLayer()); EXAMPLE
+        runtime.getLayers().push(new MenuLayer());
     }
 }

@@ -43,21 +43,21 @@ public class MenuLayer implements Layer {
         gfx.drawImage(logo, (runtime.getCanvas().getWidth() / 2)- (logo.getWidth() / 2), 90);
 
         if(selectedButton == 0) {
-            gfx.drawImage(play_selected, 283, 340);
+            gfx.drawImage(play_selected, 283, 400);
         } else {
-            gfx.drawImage(play, 283, 340);
+            gfx.drawImage(play, 283, 400);
         }
 
         if(selectedButton == 1) {
-            gfx.drawImage(settings_selected, 283, 340 + 80);
+            gfx.drawImage(settings_selected, 283, 400 + 80);
         } else {
-            gfx.drawImage(settings, 283, 340 + 80);
+            gfx.drawImage(settings, 283, 400 + 80);
         }
 
         if(selectedButton == 2) {
-            gfx.drawImage(quit_selected, 283, 340 + 160);
+            gfx.drawImage(quit_selected, 283, 400 + 160);
         } else {
-            gfx.drawImage(quit, 283, 340 + 160);
+            gfx.drawImage(quit, 283, 400 + 160);
         }
     }
 
@@ -67,7 +67,15 @@ public class MenuLayer implements Layer {
             System.out.println("Key Registered"); // Test Case
 
             if(e.getCode() == KeyCode.UP) {
-
+                if(selectedButton <= 0) selectedButton = 2;
+                else selectedButton--;
+            }
+            if(e.getCode() == KeyCode.DOWN) {
+                if(selectedButton >= 2) selectedButton = 0;
+                else selectedButton++;
+            }
+            if(e.getCode() == KeyCode.ENTER || e.getCode() == KeyCode.SPACE) {
+                // TODO: Add layer switching for each button
             }
         };
 
