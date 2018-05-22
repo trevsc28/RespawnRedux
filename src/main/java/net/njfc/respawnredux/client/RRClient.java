@@ -12,6 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import net.njfc.respawnredux.client.layers.BackgroundLayer;
 import net.njfc.respawnredux.client.layers.MenuLayer;
 import net.njfc.respawnredux.client.util.Loader;
 
@@ -46,7 +47,7 @@ public class RRClient extends Application {
 
         window.setTitle(TITLE);
 
-        window.initStyle(StageStyle.DECORATED);
+        window.initStyle(StageStyle.UNDECORATED);
 
         view.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
             if(e.getCode() == KeyCode.ESCAPE) {
@@ -74,6 +75,7 @@ public class RRClient extends Application {
         runtime.start();
 
         // Add essential layers to the stack
+        // runtime.getLayers().push(new BackgroundLayer()); // Implement when background image is available
         runtime.getLayers().push(new MenuLayer());
     }
 }

@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import net.njfc.respawnredux.client.GameRuntime;
 import net.njfc.respawnredux.client.Layer;
 import net.njfc.respawnredux.client.util.Loader;
@@ -19,7 +20,7 @@ public class MenuLayer implements Layer {
 
     private static final int BUTTONS = 3;
 
-    private Image logo, play, play_selected, quit, quit_selected, settings, settings_selected;
+    private Image logo, play, play_selected, quit, quit_selected, settings, settings_selected; // Maybe replace selected with Continue button?
     private int selectedButton = 0;
     private EventHandler<KeyEvent> keyEvent;
 
@@ -40,6 +41,12 @@ public class MenuLayer implements Layer {
 
     @Override
     public void render(GameRuntime runtime, GraphicsContext gfx) {
+        // Placeholder background color TODO: Replace with background image
+        gfx.setFill(Color.BLACK);
+        gfx.fillRect(0, 0, gfx.getCanvas().getWidth(), gfx.getCanvas().getHeight());
+        gfx.setFill(Color.SKYBLUE);
+        gfx.fillRect(10, 10, gfx.getCanvas().getWidth() - 20, gfx.getCanvas().getHeight() - 20);
+
         gfx.drawImage(logo, (runtime.getCanvas().getWidth() / 2)- (logo.getWidth() / 2), 90);
 
         if(selectedButton == 0) {
@@ -79,7 +86,12 @@ public class MenuLayer implements Layer {
             }
             if(e.getCode() == KeyCode.ENTER || e.getCode() == KeyCode.SPACE) {
                 // TODO: Add layer switching for each button
-
+                if(selectedButton == 0) {
+                    //runtime.getLayers().replace(new GameLayer());
+                }
+                if(selectedButton == 1) {
+                    //runtime.getLayers().replace(new SettingsLayer());
+                }
                 if(selectedButton == 2) {
                     runtime.getWindow().close();
                 }
