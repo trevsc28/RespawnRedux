@@ -64,18 +64,28 @@ public class MenuLayer implements Layer {
     @Override
     public void register(GameRuntime runtime) {
         this.keyEvent = e -> {
-            System.out.println("Key Registered"); // Test Case
 
             if(e.getCode() == KeyCode.UP) {
                 if(selectedButton <= 0) selectedButton = 2;
                 else selectedButton--;
+
+                buttonBeep();
             }
             if(e.getCode() == KeyCode.DOWN) {
                 if(selectedButton >= 2) selectedButton = 0;
                 else selectedButton++;
+
+                buttonBeep();
             }
             if(e.getCode() == KeyCode.ENTER || e.getCode() == KeyCode.SPACE) {
                 // TODO: Add layer switching for each button
+
+                if(selectedButton == 2) {
+                    runtime.getWindow().close();
+                }
+                System.out.println("Enter");
+
+                buttonBeep();
             }
         };
 
