@@ -14,7 +14,7 @@ import net.njfc.respawnredux.client.util.Loader;
 /**
  * @author John Siyaga
  * @version 1.0.0
- * @since 6/11/2017
+ * @since 5/22/2018
  */
 public class MenuLayer implements Layer {
 
@@ -87,7 +87,8 @@ public class MenuLayer implements Layer {
             if(e.getCode() == KeyCode.ENTER || e.getCode() == KeyCode.SPACE) {
                 // TODO: Add layer switching for each button
                 if(selectedButton == 0) {
-                    //runtime.getLayers().replace(new GameLayer());
+                    runtime.getLayers().replace(new BackgroundLayer());
+                    runtime.getLayers().push(new GameLayer());
                 }
                 if(selectedButton == 1) {
                     //runtime.getLayers().replace(new SettingsLayer());
