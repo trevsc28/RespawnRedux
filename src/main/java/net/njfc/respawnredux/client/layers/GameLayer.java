@@ -18,16 +18,12 @@ import java.util.stream.Stream;
 public class GameLayer implements Layer {
 
     protected Player p;
-    private boolean jumped = false, collided = false;
-    private int jumpticks = 0;
+    protected boolean jumped = false, collided = false, applyGravity = false;
 
     private SpriteAnimation animation;
 
     private Set<Obstacle> obstacles;
     private Set<Platform> platforms;
-
-    //private Set<Obstacle> obstacles;
-    //private Set<Platform> platforms;
 
     public GameRuntime runtime;
 
@@ -45,7 +41,7 @@ public class GameLayer implements Layer {
         if(runtime.getInput().isKeyPressed(KeyCode.UP)) {
             if(!jumped) {
                 jumped = true;
-                jumpticks = 30;
+                p.velocity = -20;
             }
         }
 
@@ -56,26 +52,23 @@ public class GameLayer implements Layer {
             // TODO: Platform collision (needs separate collision for sides, add necessary methods in Platform class)
 
             // Temp collision
-            if(pl.getBounds().contains(new Position(p.getPosition().x, p.getPosition().y + p.getTexture().getHeight())) && p.gravity < 0) {
-                p.gravity = 0;
+            if(p.getBounds().intersects(pl.getBounds())) {
                 jumped = false;
                 collided = true;
+                p.velocity = 0;
             }
             else collided = false;
         }
 
-        if(p.gravity < .01) p.gravity = 0;
 
-        if(jumpticks == 0 && !collided) {
-            p.gravity -= p.gravity * 07;
-        }
-        else {
-            p.gravity = 3;
-            jumpticks--;
-        }
+        if(!collided)
+            p.velocity -= p.gravity;
 
-        // Set position
-        p.setPosition(new Position(p.getPosition().x, p.getPosition().y + p.gravity));
+
+
+
+        p.setPosition(new Position(p.getPosition().x, p.getPosition().y + p.velocity));
+
 
         // OBSTACLE COLLISION
         for(Obstacle o : obstacles) {
