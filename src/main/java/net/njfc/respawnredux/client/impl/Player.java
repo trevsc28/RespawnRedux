@@ -1,6 +1,5 @@
 package net.njfc.respawnredux.client.impl;
 
-import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import net.njfc.respawnredux.client.GameRuntime;
 import net.njfc.respawnredux.client.util.Loader;
@@ -22,7 +21,7 @@ public class Player implements AbstractPlayer {
     public Player(GameRuntime runtime, Position p) {
         // Standard Movement Values
         this.motion = 0;
-        this.gravity = -2;
+        this.gravity = -1;
         this.velocity = 0;
         this.position = p;
         this.texture = Loader.image("img/player.png"); // TODO: Add player image
@@ -48,8 +47,8 @@ public class Player implements AbstractPlayer {
 
     public Rectangle getBounds() {
         return new Rectangle(
-                new Position(position.x - (texture.getWidth() / 2), position.y - texture.getHeight() / 2),
-                new Position(position.x + (texture.getWidth() / 2), position.y + texture.getHeight() / 2)
+                new Position(position.x - (texture.getWidth()), position.y - texture.getHeight()),
+                new Position(position.x + (texture.getWidth()), position.y + texture.getHeight())
         );
     }
 }

@@ -27,8 +27,8 @@ public class Platform {
 
     public Rectangle getBounds() {
         return new Rectangle(
-                new Position(position.x - (texture.getWidth() / 2), position.y - texture.getHeight() / 2),
-                new Position(position.x + (texture.getWidth() / 2), position.y + texture.getHeight() / 2)
+                new Position(position.x - (texture.getWidth()), position.y - texture.getHeight()),
+                new Position(position.x + (texture.getWidth()), position.y + texture.getHeight())
         );
     }
 }

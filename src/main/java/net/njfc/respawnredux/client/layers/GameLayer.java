@@ -18,7 +18,8 @@ import java.util.stream.Stream;
 public class GameLayer implements Layer {
 
     protected Player p;
-    protected boolean jumped = false, collided = false, applyGravity = false;
+    protected boolean jumped = false, applyGravity = false;
+    protected int collided = 0;
 
     private SpriteAnimation animation;
 
@@ -36,16 +37,15 @@ public class GameLayer implements Layer {
         }
         // Player control
         if(runtime.getInput().isKeyPressed(KeyCode.RIGHT)) {
-            p.motion -= .9;
+            p.motion += .9;
         }
         else if(runtime.getInput().isKeyPressed(KeyCode.LEFT)) {
-            p.motion += .9;
+            p.motion -= .9;
         }
 
         if(runtime.getInput().isKeyPressed(KeyCode.UP)) {
             if(!jumped) {
-                jumped = true;
-                p.velocity = -20;
+                jump();
             }
         }
 
@@ -56,19 +56,39 @@ public class GameLayer implements Layer {
             // TODO: Platform collision (needs separate collision for sides, add necessary methods in Platform class)
 
             // Temp collision
-            if(p.getBounds().intersects(pl.getBounds())) {
-                jumped = false;
-                collided = true;
-                p.velocity = 0;
+            if(!jumped) {
+                if(p.getBounds().intersects(pl.getBounds())) {
+                    collided++;
+                    p.velocity = 0;
+                }
             }
-            else collided = false;
+            else {
+                if(p.getBounds().intersects(pl.getBounds())) {
+                    jumped = false;
+                    collided++;
+                }
+            }
         }
 
         if(!collided)
+
+        if(collided == 0)
             p.velocity -= p.gravity;
 
-        p.setPosition(new Position(p.getPosition().x, p.getPosition().y + p.velocity));
+        collided = 0;
 
+        // Player Movement
+        p.setPosition(new Position(p.getPosition().x, p.getPosition().y + p.velocity));
+        p.motion *= .93;
+
+        if(p.getPosition().x < 0) {
+            p.motion = 0;
+            p.setPosition(new Position(0, p.getPosition().y));
+        }
+        if(p.getPosition().x > 1024) {
+            p.motion = 0;
+            p.setPosition(new Position(1024, p.getPosition().y));
+        }
 
         // OBSTACLE COLLISION
         for(Obstacle o : obstacles) {
@@ -77,6 +97,14 @@ public class GameLayer implements Layer {
             }
         }
 
+        // Player Movement
+        p.setPosition(new Position(p.getPosition().x + p.motion, p.getPosition().y));
+
+    }
+
+    public void jump() {
+        p.velocity = -20;
+        jumped = true;
     }
 
     @Override
@@ -98,7 +126,7 @@ public class GameLayer implements Layer {
 
     @Override
     public void register(GameRuntime runtime) {
-        this.p = new Player(runtime, new Position(50, 500));
+        this.p = new Player(runtime, new Position(50, 200));
 
         // Add platforms to the level
         platforms = Stream.of(
