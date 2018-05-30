@@ -75,7 +75,7 @@ public class RRClient extends Application {
         runtime.start();
 
         // Add essential layers to the stack
-        // runtime.getLayers().push(new BackgroundLayer()); // Implement when background image is available
+        runtime.getLayers().push(new BackgroundLayer());
         runtime.getLayers().push(new MenuLayer());
     }
 }

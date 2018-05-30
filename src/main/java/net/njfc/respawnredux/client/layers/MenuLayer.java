@@ -8,6 +8,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import net.njfc.respawnredux.client.GameRuntime;
 import net.njfc.respawnredux.client.Layer;
+import net.njfc.respawnredux.client.Util;
 import net.njfc.respawnredux.client.util.Loader;
 
 
@@ -42,30 +43,25 @@ public class MenuLayer implements Layer {
 
     @Override
     public void render(GameRuntime runtime, GraphicsContext gfx) {
-        // Placeholder background color TODO: Replace with background image
-        gfx.setFill(Color.BLACK);
-        gfx.fillRect(0, 0, gfx.getCanvas().getWidth(), gfx.getCanvas().getHeight());
-        gfx.setFill(Color.SKYBLUE);
-        gfx.fillRect(10, 10, gfx.getCanvas().getWidth() - 20, gfx.getCanvas().getHeight() - 20);
 
         gfx.drawImage(logo, (runtime.getCanvas().getWidth() / 2)- (logo.getWidth() / 2), 90);
 
         if(selectedButton == 0) {
-            gfx.drawImage(play_selected, 283, 400);
+            gfx.drawImage(play_selected, 283, 450);
         } else {
-            gfx.drawImage(play, 283, 400);
+            gfx.drawImage(play, 283, 450);
         }
 
         if(selectedButton == 1) {
-            gfx.drawImage(settings_selected, 283, 400 + 80);
+            gfx.drawImage(settings_selected, 283, 450 + 180);
         } else {
-            gfx.drawImage(settings, 283, 400 + 80);
+            gfx.drawImage(settings, 283, 450 + 180);
         }
 
         if(selectedButton == 2) {
-            gfx.drawImage(quit_selected, 283, 400 + 160);
+            gfx.drawImage(quit_selected, 283, 450 + 360);
         } else {
-            gfx.drawImage(quit, 283, 400 + 160);
+            gfx.drawImage(quit, 283, 450 + 360);
         }
     }
 
@@ -86,10 +82,12 @@ public class MenuLayer implements Layer {
                 buttonBeep();
             }
             if(e.getCode() == KeyCode.ENTER || e.getCode() == KeyCode.SPACE) {
-                // TODO: Add layer switching for each button
                 if(selectedButton == 0) {
-                    runtime.getLayers().replace(new BackgroundLayer());
-                    runtime.getLayers().push(new GameLayer());
+                	runtime.getLayers().pop();
+	                Util.setTimeout(1250, () -> {
+		                runtime.getLayers().push(new GameLayer());
+	                });
+                    runtime.getSoundtrack().fadeOut();
                 }
                 if(selectedButton == 1) {
                     //runtime.getLayers().replace(new SettingsLayer());
@@ -111,7 +109,7 @@ public class MenuLayer implements Layer {
         runtime.getScene().removeEventHandler(KeyEvent.KEY_PRESSED, keyEvent);
     }
 
-    public static void buttonBeep() {
+    private static void buttonBeep() {
 	    Loader.audioSmall("sound/beep.mp3").play();
     }
 

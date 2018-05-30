@@ -41,6 +41,7 @@ public class GameRuntime extends AnimationTimer {
 
         // Start the soundtrack as the game starts
         Util.setTimeout(500, () -> this.st.play());
+        this.st.loop();
     }
 
     @Override

@@ -30,6 +30,10 @@ public class GameLayer implements Layer {
     @Override
     public void update(GameRuntime runtime) {
 
+        if(!runtime.getSoundtrack().isActive()) {
+	        runtime.getSoundtrack().play();
+			runtime.getSoundtrack().loop();
+        }
         // Player control
         if(runtime.getInput().isKeyPressed(KeyCode.RIGHT)) {
             p.motion -= .9;
@@ -60,12 +64,8 @@ public class GameLayer implements Layer {
             else collided = false;
         }
 
-
         if(!collided)
             p.velocity -= p.gravity;
-
-
-
 
         p.setPosition(new Position(p.getPosition().x, p.getPosition().y + p.velocity));
 

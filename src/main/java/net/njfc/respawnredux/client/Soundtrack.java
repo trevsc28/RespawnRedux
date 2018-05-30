@@ -41,6 +41,10 @@ public class Soundtrack {
 		this.active = true;
 	}
 
+	public void loop() {
+		this.soundTrackPlayer.setCycleCount(-1);
+	}
+
 	public void stop() {
 		this.soundTrackPlayer.stop();
 		this.active = false;
