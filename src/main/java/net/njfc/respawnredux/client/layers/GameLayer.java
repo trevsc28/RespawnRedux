@@ -33,10 +33,10 @@ public class GameLayer implements Layer {
 
         // Player control
         if(runtime.getInput().isKeyPressed(KeyCode.RIGHT)) {
-            p.motion -= .9;
+            p.motion += .9;
         }
         else if(runtime.getInput().isKeyPressed(KeyCode.LEFT)) {
-            p.motion += .9;
+            p.motion -= .9;
         }
 
         if(runtime.getInput().isKeyPressed(KeyCode.UP)) {
@@ -53,7 +53,7 @@ public class GameLayer implements Layer {
 
             // Temp collision
             if(!jumped) {
-                if (p.getBounds().intersects(pl.getBounds())) {
+                if(p.getBounds().intersects(pl.getBounds())) {
                     collided++;
                     p.velocity = 0;
                 }
@@ -71,8 +71,18 @@ public class GameLayer implements Layer {
 
         collided = 0;
 
+        // Player Movement
         p.setPosition(new Position(p.getPosition().x, p.getPosition().y + p.velocity));
+        p.motion *= .93;
 
+        if(p.getPosition().x < 0) {
+            p.motion = 0;
+            p.setPosition(new Position(0, p.getPosition().y));
+        }
+        if(p.getPosition().x > 1024) {
+            p.motion = 0;
+            p.setPosition(new Position(1024, p.getPosition().y));
+        }
 
         // OBSTACLE COLLISION
         for(Obstacle o : obstacles) {
@@ -80,6 +90,9 @@ public class GameLayer implements Layer {
                 p.kill();
             }
         }
+
+        // Player Movement
+        p.setPosition(new Position(p.getPosition().x + p.motion, p.getPosition().y));
 
     }
 
