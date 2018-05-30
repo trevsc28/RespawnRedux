@@ -24,4 +24,8 @@ public class Collision {
 		return Math.sqrt(Math.pow((origin.x - target.x), 2) + Math.pow((origin.y - target.y), 2));
 	}
 
+	public static boolean rectCheck(Rectangle rect1, Rectangle rect2) {
+		return rect1.intersects(rect2);
+	}
+
 }

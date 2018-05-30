@@ -14,7 +14,7 @@ import net.njfc.respawnredux.client.util.Rectangle;
  */
 public class Player implements AbstractPlayer {
 
-    public double motion, gravity;
+    public double motion, gravity, velocity;
     private Position position;
 
     private Image texture;
@@ -22,7 +22,8 @@ public class Player implements AbstractPlayer {
     public Player(GameRuntime runtime, Position p) {
         // Standard Movement Values
         this.motion = 0;
-        this.gravity = -9.8;
+        this.gravity = -2;
+        this.velocity = 0;
         this.position = p;
         this.texture = Loader.image("img/player.png"); // TODO: Add player image
     }

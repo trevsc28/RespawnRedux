@@ -15,7 +15,7 @@ import net.njfc.respawnredux.client.util.Loader;
  * @author John Siyaga
  * @version 1.0.0
  * @since 5/22/2018
- * 
+ *
  */
 public class MenuLayer implements Layer {
 

@@ -8,4 +8,5 @@ public interface AbstractPlayer {
     Position getPosition();
 
     Image getTexture();
+
 }

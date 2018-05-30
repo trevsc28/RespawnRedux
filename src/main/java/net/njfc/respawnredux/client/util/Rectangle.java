@@ -63,6 +63,29 @@ public class Rectangle {
 		return x >= x1 && x <= x2 && y >= y1 && y <= y2;
 	}
 
+	public boolean intersects(Rectangle r) {
+		double tw = getWidth();
+		double th = getHeight();
+		double rw = r.getWidth();
+		double rh = r.getHeight();
+		if (rw <= 0 || rh <= 0 || tw <= 0 || th <= 0) {
+			return false;
+		}
+		double tx = this.min.x;
+		double ty = this.min.y;
+		double rx = r.min.x;
+		double ry = r.min.y;
+		rw += rx;
+		rh += ry;
+		tw += tx;
+		th += ty;
+		//      overflow || intersect
+		return ((rw < rx || rw > tx) &&
+				(rh < ry || rh > ty) &&
+				(tw < tx || tw > rx) &&
+				(th < ty || th > ry));
+	}
+
 	/**
 	 * Returns the center of this rectangle
 	 *
