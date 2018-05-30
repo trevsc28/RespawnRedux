@@ -23,7 +23,7 @@ public class Obstacle {
 
     public Rectangle getBounds() {
         return new Rectangle(
-                new Position(position.x - (texture.getWidth()), position.y - texture.getHeight()),
+                new Position(position.x, position.y - texture.getHeight()),
                 new Position(position.x + (texture.getWidth()), position.y + texture.getHeight())
         );
     }

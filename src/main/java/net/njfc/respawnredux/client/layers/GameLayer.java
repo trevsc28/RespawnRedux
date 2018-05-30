@@ -53,13 +53,23 @@ public class GameLayer implements Layer {
 
         // PLATFORM COLLISION
         for(Platform pl : platforms) {
-            // TODO: Platform collision (needs separate collision for sides, add necessary methods in Platform class)
 
-            // Temp collision
             if(!jumped) {
                 if(p.getBounds().intersects(pl.getBounds())) {
                     collided++;
                     p.velocity = 0;
+
+	                if(p.getBounds().getMax().y > pl.getBounds().getMin().y && !(p.getBounds().getMax().y > pl.getBounds().getMin().y + 20)) {
+		                p.setPosition(new Position(p.getPosition().x, pl.getBounds().getMin().y - p.getTexture().getHeight()));
+	                }
+	                else if(p.getBounds().getMax().x > pl.getBounds().getMin().x && p.getBounds().getMin().x < pl.getBounds().getMin().x + 20) {
+		                p.setPosition(new Position(pl.getBounds().getMin().x - p.getTexture().getWidth(), p.getPosition().y));
+		                p.motion = 0;
+	                }
+	                else if(p.getBounds().getMin().x < pl.getBounds().getMax().x) {
+		                p.setPosition(new Position(pl.getBounds().getMax().x , p.getPosition().y));
+		                p.motion = 0;
+	                }
                 }
             }
             else {
@@ -101,7 +111,7 @@ public class GameLayer implements Layer {
     }
 
     public void jump() {
-        p.velocity = -20;
+        p.velocity = -10;
         jumped = true;
     }
 

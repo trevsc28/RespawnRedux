@@ -21,7 +21,7 @@ public class Player implements AbstractPlayer {
     public Player(GameRuntime runtime, Position p) {
         // Standard Movement Values
         this.motion = 0;
-        this.gravity = -1;
+        this.gravity = -.5;
         this.velocity = 0;
         this.position = p;
         this.texture = Loader.image("img/player.png"); // TODO: Add player image
@@ -46,8 +46,8 @@ public class Player implements AbstractPlayer {
     }
 
     public Rectangle getBounds() {
-        return new Rectangle(
-                new Position(position.x - (texture.getWidth()), position.y - texture.getHeight()),
+    	return new Rectangle(
+                new Position(position.x, position.y),
                 new Position(position.x + (texture.getWidth()), position.y + texture.getHeight())
         );
     }

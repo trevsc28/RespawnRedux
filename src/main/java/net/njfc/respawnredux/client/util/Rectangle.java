@@ -64,26 +64,7 @@ public class Rectangle {
 	}
 
 	public boolean intersects(Rectangle r) {
-		double tw = getWidth();
-		double th = getHeight();
-		double rw = r.getWidth();
-		double rh = r.getHeight();
-		if (rw <= 0 || rh <= 0 || tw <= 0 || th <= 0) {
-			return false;
-		}
-		double tx = this.min.x;
-		double ty = this.min.y;
-		double rx = r.min.x;
-		double ry = r.min.y;
-		rw += rx;
-		rh += ry;
-		tw += tx;
-		th += ty;
-		//      overflow || intersect
-		return ((rw < rx || rw > tx) &&
-				(rh < ry || rh > ty) &&
-				(tw < tx || tw > rx) &&
-				(th < ty || th > ry));
+		return this.min.x < r.max.x && this.max.x > r.min.x && this.min.y < r.max.y && this.max.y > r.min.y;
 	}
 
 	/**
