@@ -18,7 +18,8 @@ import java.util.stream.Stream;
 public class GameLayer implements Layer {
 
     protected Player p;
-    protected boolean jumped = false, collided = false, applyGravity = false;
+    protected boolean jumped = false, applyGravity = false;
+    protected int collided = 0;
 
     private SpriteAnimation animation;
 
@@ -40,8 +41,7 @@ public class GameLayer implements Layer {
 
         if(runtime.getInput().isKeyPressed(KeyCode.UP)) {
             if(!jumped) {
-                jumped = true;
-                p.velocity = -20;
+                jump();
             }
         }
 
@@ -52,20 +52,24 @@ public class GameLayer implements Layer {
             // TODO: Platform collision (needs separate collision for sides, add necessary methods in Platform class)
 
             // Temp collision
-            if(p.getBounds().intersects(pl.getBounds())) {
-                jumped = false;
-                collided = true;
-                p.velocity = 0;
+            if(!jumped) {
+                if (p.getBounds().intersects(pl.getBounds())) {
+                    collided++;
+                    p.velocity = 0;
+                }
             }
-            else collided = false;
+            else {
+                if(p.getBounds().intersects(pl.getBounds())) {
+                    jumped = false;
+                    collided++;
+                }
+            }
         }
 
-
-        if(!collided)
+        if(collided == 0)
             p.velocity -= p.gravity;
 
-
-
+        collided = 0;
 
         p.setPosition(new Position(p.getPosition().x, p.getPosition().y + p.velocity));
 
@@ -77,6 +81,11 @@ public class GameLayer implements Layer {
             }
         }
 
+    }
+
+    public void jump() {
+        p.velocity = -20;
+        jumped = true;
     }
 
     @Override
@@ -98,7 +107,7 @@ public class GameLayer implements Layer {
 
     @Override
     public void register(GameRuntime runtime) {
-        this.p = new Player(runtime, new Position(50, 500));
+        this.p = new Player(runtime, new Position(50, 200));
 
         // Add platforms to the level
         platforms = Stream.of(
