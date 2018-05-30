@@ -70,8 +70,6 @@ public class GameLayer implements Layer {
             }
         }
 
-        if(!collided)
-
         if(collided == 0)
             p.velocity -= p.gravity;
 
